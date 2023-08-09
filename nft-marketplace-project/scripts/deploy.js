@@ -2,8 +2,9 @@ const hre = require("hardhat");
 
 async function main() {
   console.log('Start Smart Contract deployment');
-  const Contract = await hre.ethers.getContractFactory("NFTMarketplace");
-  const registry =  await Contract.deploy();
+
+  //Add Missing code here...
+
   console.log(`NFTMarketplace Address: ${registry.address}`);
 }
 
