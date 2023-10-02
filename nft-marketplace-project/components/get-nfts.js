@@ -21,57 +21,40 @@ export default function GetNFTsComponent({ showOnlyMyNFTs }) {
 
   async function connectToSmartContract() {
     if (!contract) {
-      const web3Modal = new Web3Modal();
-      const connection = await web3Modal.connect();
-      const provider = new ethers.providers.Web3Provider(connection);
-      const signer = provider.getSigner();
-      contract = new ethers.Contract(marketplaceAddress, contractAbi.marketplaceAbi, signer);
+      // Creare a Web3Modal helps with connecting to Ethereum wallets and providers.
+      // Initiate a connection to the user's Ethereum wallet or provider.
+      // Create a provider, which is an abstraction that allows you to interact with the Ethereum blockchain and smart contracts.
+      // Obtain a signer object from the provider.
+      // Create an instance of the ethers.Contract class, which represents an Ethereum smart contract
     }
   }
 
   async function loadNFTs() {
-    await connectToSmartContract();
+    // Connect to the smart contract (assuming this is defined elsewhere)
+    // Initialize an empty array to store a list of NFTs
+    // Check if we want to show only the user's NFTs
+      // Fetch the user's NFTs from the contract
+      // Else, fetch all NFTs from the contract
 
-    let listOfNFTs = [];
+    // Use Promise.all to perform asynchronous operations on each NFT in the list
+      // Get the token URI for the NFT
+      
+      // Fetch metadata for the NFT using the token URI (e.g., from IPFS)
 
-    if (showOnlyMyNFTs) {
-      listOfNFTs = await contract.fetchMyNFTs();
-    } else {
-      listOfNFTs = await contract.fetchAllNFTs();
-    }
-
-    /*
-    *  map over items returned from smart contract and format 
-    *  them as well as fetch their token metadata
-    */
-    const items = await Promise.all(listOfNFTs.map(async nft => {
-      const tokenUri = await contract.tokenURI(nft.tokenId);
-      const metadata = await axios.get(tokenUri);
-      return {
-        tokenId: nft.tokenId.toNumber(),
-        owner: nft.owner,
-        seller: nft.seller,
-        image: metadata.data.image,
-        name: metadata.data.name,
-        description: metadata.data.description,
-        price: nft.price,
-        sold: nft.sold
-      };
-    }));
-
-    setNfts(items);
+      // Return an object representing the NFT with relevant information
+      
+    // Set the state variable 'NFTs' with the fetched and formatted NFT data
   }
 
   async function onBuyNftClicked(nft) {
     await connectToSmartContract();
 
     /* user will be prompted to pay the asking process to complete the transaction */
-    const price = ethers.utils.parseUnits(nft.price.toString(), 'wei');
-    const transaction = await contract.buyToken(nft.tokenId, {
-      value: price
-    });
-    await transaction.wait();
-    await loadNFTs();
+    // Convert a price value from its human-readable representation (in wei) to its raw representation (in wei).
+    // Call the buyToken function of the contract instance to initiate a transaction to buy the NFT. Pass tokenId and the price in wei.
+    
+    // Await the completion of the transaction 
+    //Reload list of NFTs
   }
 
   async function onResellNftClicked(nft) {
@@ -89,16 +72,15 @@ export default function GetNFTsComponent({ showOnlyMyNFTs }) {
 
 
   async function resellNft(nft, newPriceInETH) {
-    await connectToSmartContract();
-
-    const priceFormatted = ethers.utils.parseUnits(newPriceInETH, 'ether');
-    let listingPrice = await contract.getListingPrice();
-
-    listingPrice = listingPrice.toString();
-    let transaction = await contract.resellToken(nft.tokenId, priceFormatted, { value: listingPrice });
-    await transaction.wait();
-    await loadNFTs();
-  }
+        // Connect to the smart contract
+        // Convert the new price from Ether to a BigNumber format
+        // Get the listing price from the smart contract
+        // Convert the listing price to a string format    
+        // Resell the NFT by calling the smart contract's resellToken function
+        // with the NFT's tokenId, the formatted price, and including the value of the listing price
+        // Wait for the transaction to be mined and confirmed on the blockchain    
+        // Load NFTs again, presumably to update the list of NFTs after the reselling
+        }
 
   function formatPriceToETH(priceInWei) {
     return ethers.utils.formatEther(priceInWei);
