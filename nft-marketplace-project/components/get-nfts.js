@@ -38,23 +38,19 @@ export default function GetNFTsComponent({ showOnlyMyNFTs }) {
 
     // Use Promise.all to perform asynchronous operations on each NFT in the list
       // Get the token URI for the NFT
-      
       // Fetch metadata for the NFT using the token URI (e.g., from IPFS)
-
       // Return an object representing the NFT with relevant information
       
     // Set the state variable 'NFTs' with the fetched and formatted NFT data
   }
 
   async function onBuyNftClicked(nft) {
-    await connectToSmartContract();
-
-    /* user will be prompted to pay the asking process to complete the transaction */
+    // Connect to the smart contract
+    // user will be prompted to pay the asking process to complete the transaction
     // Convert a price value from its human-readable representation (in wei) to its raw representation (in wei).
     // Call the buyToken function of the contract instance to initiate a transaction to buy the NFT. Pass tokenId and the price in wei.
-    
     // Await the completion of the transaction 
-    //Reload list of NFTs
+    // Reload list of NFTs
   }
 
   async function onResellNftClicked(nft) {
@@ -80,7 +76,7 @@ export default function GetNFTsComponent({ showOnlyMyNFTs }) {
         // with the NFT's tokenId, the formatted price, and including the value of the listing price
         // Wait for the transaction to be mined and confirmed on the blockchain    
         // Load NFTs again, presumably to update the list of NFTs after the reselling
-        }
+  }
 
   function formatPriceToETH(priceInWei) {
     return ethers.utils.formatEther(priceInWei);
