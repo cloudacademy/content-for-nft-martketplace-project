@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 async function bulkMint(baseURL) {
   console.log('Starting Bulk Mint');
   const priceInETH = 0.5;//0.5 ETH
-  const numberOfNFTs = 20;
+  const numberOfNFTs = 8;
   const listingPrice = 0.05; //0.05 ETH
   const totalFees = listingPrice*numberOfNFTs;
 
